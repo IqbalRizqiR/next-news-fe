@@ -2,6 +2,23 @@ import Image from "next/image";
 import Navbar from "./components/navbar";
 import Card from "./components/Card";
 
+type Post = {
+  image: string;
+  title: string;
+  date: string;
+  author: string;
+  tags: string[];
+};
+
+const fetchData = async (): Promise<Post[]> => {
+    const response = await fetch("https://dummyjson.com/posts?limit=4");
+    const data = await response.json();
+    console.log(data);
+    return data.posts;
+  };
+
+
+
 const postCard = [
   {
     image: "/art.png",
@@ -29,7 +46,9 @@ const postCard = [
   },
 ]
 
-export default function Home() {
+export default async function Home() {
+  const postData = await fetchData();
+  const posts = postData;
   return (
     <>
       <div className="block px-[68px] py-[120px]">
@@ -54,13 +73,14 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-4 py-[32px] gap-[20px]">
-          {postCard.map((post, index) => (
+          {postData.map((post, index) => (
             <Card
               key={index}
-              image={post.image}
+              image={'/art.png'}
               title={post.title}
-              date={post.date}
-              author={post.author}
+              date={'Oct 10, 2023'}
+              author={'John Doe'}
+              categories={post.tags}
             />
           ))}
         </div>
