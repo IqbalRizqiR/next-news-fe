@@ -1,8 +1,54 @@
 import Image from "next/image";
 import Navbar from "./components/navbar";
+import Card from "./components/Card";
+
+type Post = {
+  image: string;
+  title: string;
+  date: string;
+  author: string;
+  tags: string[];
+};
+
+const fetchData = async (): Promise<Post[]> => {
+    const response = await fetch("https://dummyjson.com/posts?limit=4");
+    const data = await response.json();
+    console.log(data);
+    return data.posts;
+  };
 
 
-export default function Home() {
+
+const postCard = [
+  {
+    image: "/art.png",
+    title: "The Art of Skateboarding: A Journey Through the Streets",
+    date: "Oct 10, 2023",
+    author: "John Doe",
+  },
+  {
+    image: "/art.png",
+    title: "The Art of Skateboarding: A Journey Through the Streets",
+    date: "Oct 10, 2023",
+    author: "John Doe",
+  },
+  {
+    image: "/art.png",
+    title: "The Art of Skateboarding: A Journey Through the Streets",
+    date: "Oct 10, 2023",
+    author: "John Doe",
+  },
+  {
+    image: "/art.png",
+    title: "The Art of Skateboarding: A Journey Through the Streets",
+    date: "Oct 10, 2023",
+    author: "John Doe",
+  },
+]
+
+export default async function Home() {
+  const postData = await fetchData();
+  const posts = postData;
   return (
     <>
       <div className="block px-[68px] py-[120px]">
@@ -20,24 +66,23 @@ export default function Home() {
           <h1 className="font-regular text-[100px] 2xl:text-[200px] text-center">CREATIVE THINKERS</h1>
         </div>
       </div>
-
-
       <div className="block px-[34px] py-[80px]">
         <div className="flex items-center gap-5">
           <h1 className="font-light text-[36px]">Features</h1>
           <a href="" className="px-[16px] py-[8px] border-2 border-black rounded-[24px] text-[16px]">View All</a>
         </div>
 
-        <div className="grid grid-cols-4 py-[32px]">
-          <div className="card">
-            <Image src='/art.png' alt='' width='328' height='432' />
-            <div className="flex gap-2">
-              <a href="" className="hover:bg-black hover:shadow-lg px-[8px] py-[4px] border-2 border-gray-300 rounded-[14px] text-[16px] hover:text-white">Sports</a>
-              <a href="" className="hover:bg-black hover:shadow-lg px-[8px] py-[4px] border-2 border-gray-300 rounded-[14px] text-[16px] hover:text-white">Events</a>
-              <a href="" className="hover:bg-black hover:shadow-lg px-[8px] py-[4px] border-2 border-gray-300 rounded-[14px] text-[16px] hover:text-white">Skateboard</a>
-              <a href="" className="hover:bg-black hover:shadow-lg px-[8px] py-[4px] border-2 border-gray-300 rounded-[14px] text-[16px] hover:text-white">...</a>
-            </div>
-          </div>
+        <div className="grid grid-cols-4 py-[32px] gap-[20px]">
+          {postData.map((post, index) => (
+            <Card
+              key={index}
+              image={'/art.png'}
+              title={post.title}
+              date={'Oct 10, 2023'}
+              author={'John Doe'}
+              categories={post.tags}
+            />
+          ))}
         </div>
       </div>
     </>
