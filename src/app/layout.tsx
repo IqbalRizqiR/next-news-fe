@@ -5,8 +5,8 @@ import "./globals.css";
 import Navbar from "./components/navbar"
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
-config.autoAddCss = false;
 
+config.autoAddCss = false;
 
 
 
@@ -38,9 +38,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}  ${poppins.variable}antialiased`}>
-        <Navbar />
+        <Navbar  />
         {children}
-        
+      
       </body>
     </html>
   );
